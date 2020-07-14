@@ -15,6 +15,59 @@ const render = require("./lib/htmlRenderer");
 // and to create objects for each team member (using the correct classes as blueprints!)
 
 // Define questions common to all employee types and to each specific type in an object
+const questions = {
+    allStart: [
+        {
+            type: "input",
+            name: "name",
+            message: "Name:"
+        },
+        {
+            type: "input",
+            name: "id",
+            message: "ID:"
+        },
+        {
+            type: "input",
+            name: "email",
+            message: "Email:"
+        }
+    ],
+    manager: [
+        {
+            type: "input",
+            name: "officeNumber",
+            message: "Office number:"
+        }
+    ],
+    engineer: [
+        {
+            type: "input",
+            name: "github",
+            message: "GitHub username:"
+        }
+    ],
+    intern: [
+        {
+            type: "input",
+            name: "school",
+            message: "School:"
+        }
+    ],
+    allEnd: [
+        {
+            type: "list",
+            name: "nextType",
+            message: "Enter an engineer or intern next?",
+            choices: ["Engineer", "Intern", "None, I'm all done."]
+        }
+    ],
+    getQuestions: function(employeeType) {
+        return [...this.allStart, ...this[employeeType], ...this.allEnd];
+    }
+}
+
+console.log(questions.getQuestions("intern"));
 
 // Create empty array of employees
 
