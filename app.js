@@ -17,6 +17,8 @@ const render = require("./lib/htmlRenderer");
 // After the user has input all employees desired, call the `render` function (required
 // above) and pass in an array containing all employee objects; the `render` function will
 // generate and return a block of HTML including templated divs for each employee!
+const html = render([new Manager("Michael", 0, "michael@paper.com", 12), new Intern("Ryan", 2, "ryan@paper.com", "School of Paper"), new Engineer("Dwight", 1, "dwight@paper.com", "dwight")]);
+console.log(html);
 
 // After you have your html, you're now ready to create an HTML file using the HTML
 // returned from the `render` function. Now write it to a file named `team.html` in the
