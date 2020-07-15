@@ -58,7 +58,7 @@ const questions = {
         {
             type: "list",
             name: "nextType",
-            message: "Enter an engineer or intern next?",
+            message: "\nEnter info for an engineer or intern next?",
             choices: ["Engineer", "Intern", "None, I'm all done."]
         }
     ],
@@ -67,31 +67,61 @@ const questions = {
     }
 }
 
-console.log(questions.getQuestions("intern"));
+// console.log(questions.getQuestions("intern"));
 
 // Create empty array of employees
+const employees = [];
 
 // Create function to get info
+function getEmployeeInfo(employeeType) {
     // ask questions
-    // push new employee object to array
-    // if adding another employee, call function again
-    // else, return
+    inquirer
+        .prompt(questions.getQuestions(employeeType))
+        .then(answers => {
+            // push new employee object to array
+            switch (employeeType) {
+                case "manager":
+                    employees.push(new Manager(answers.name, answers.id, answers.email, answers.officeNumber));
+                    break;
+                case "engineer":
+                    employees.push(new Engineer(answers.name, answers.id, answers.email, answers.github));
+                    break;
+                case "intern":
+                    employees.push(new Intern(answers.name, answers.id, answers.email, answers.school));
+                    break;
+                default:
+                    throw new Error("attemtping to add unknown employee type");
+            }
+            // if adding another employee, call function again
+            // else, generate the html file
+            if (answers.nextType !== "None, I'm all done.") {
+                getEmployeeInfo(answers.nextType.toLowerCase());
+            } else {
+                // After the user has input all employees desired, call the `render` function (required
+                // above) and pass in an array containing all employee objects; the `render` function will
+                // generate and return a block of HTML including templated divs for each employee!
+                const html = render(employees);
+                // console.log(html);
 
-// After the user has input all employees desired, call the `render` function (required
-// above) and pass in an array containing all employee objects; the `render` function will
-// generate and return a block of HTML including templated divs for each employee!
-const html = render([new Manager("Michael", 0, "michael@paper.com", 12), new Intern("Ryan", 2, "ryan@paper.com", "School of Paper"), new Engineer("Dwight", 1, "dwight@paper.com", "dwight")]);
-// console.log(html);
+                // After you have your html, you're now ready to create an HTML file using the HTML
+                // returned from the `render` function. Now write it to a file named `team.html` in the
+                // `output` folder. You can use the variable `outputPath` above target this location.
+                // Hint: you may need to check if the `output` folder exists and create it if it
+                // does not.
+                fs.writeFile(outputPath, html, "utf8", (err) => {
+                    if (err) throw err;
+                    console.log('\nThe HTML file has been saved in the output folder.\n');
+                });
+            }
+        })
+        .catch(error => {
+            throw error;
+        })
+}
 
-// After you have your html, you're now ready to create an HTML file using the HTML
-// returned from the `render` function. Now write it to a file named `team.html` in the
-// `output` folder. You can use the variable `outputPath` above target this location.
-// Hint: you may need to check if the `output` folder exists and create it if it
-// does not.
-fs.writeFile(outputPath, html, "utf8", (err) => {
-    if (err) throw err;
-    console.log('The HTML file has been saved in the output folder.');
-});
+// Run the function, starting with manager
+console.log("\nWelcome to the team profile generator.\n\nStart by entering the manager's info.");
+getEmployeeInfo("manager");
 
 // HINT: each employee type (manager, engineer, or intern) has slightly different
 // information; write your code to ask different questions via inquirer depending on
