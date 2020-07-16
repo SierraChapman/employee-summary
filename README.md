@@ -18,9 +18,9 @@ This application uses a command line interface to allow the user to input inform
 
 * [Tests](#tests)
 
-* [Questions](#questions)
-
 * [Acknowledgements](#acknowledgements)
+
+* [Questions](#questions)
 
 ## Installation
 
@@ -89,10 +89,10 @@ To run tests, run the following command:
 npm test
 ```
 
-## Questions
-
-If you have any questions about the repo, open an issue or contact me directly at siechap@gmail.com. You can find more of my work at [SierraChapman](https://github.com/SierraChapman/).
-
 ## Acknowledgments
 
 * The HTML templates and the function to generate the HTML (with minor changes to both) as well as the test scripts were provided by Trinity Education Services, a 2U, Inc.
+
+## Questions
+
+If you have any questions about the repo, open an issue or contact me directly at siechap@gmail.com. You can find more of my work at [SierraChapman](https://github.com/SierraChapman/).
